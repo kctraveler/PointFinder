@@ -1,0 +1,41 @@
+{
+
+    "manifest_version": 2,
+    "name": "Point Finder",
+    "version": "1.0",
+  
+    "description": "Alerts user if the site they are visiting is available on airline shopping portals.",
+  
+    "icons": {
+      "48": "icons/airplane-window-48.png",
+      "96": "icons/airplane-window-96.png"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*/*"],
+        "js": ["pointfinder.js"]
+      }
+    ],
+
+    "browser_action": {
+        "default_icon": {
+          "19": "button/airplane-window-19.png",
+          "38": "button/airplane-window-38.png"
+        },
+        "default_title": "Shopping Portal Deal Finder",
+        "default_popup": "popup/pointfinder-popup.html"
+      },
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "activeTab",
+        "<all_urls>",
+        "tabs",
+        "cookies"
+    ]
+       
+  }
+  
