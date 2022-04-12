@@ -11,10 +11,8 @@ let showSuccess = () => {
     document.getElementById("current_page").innerText = "Success!!!";
 }
 
-browser.tabs.executeScript({file: "pointfinder.js"})
-.then(showSuccess)
-.catch(reportExecuteScriptError);
-
-
-
-
+browser.tabs.executeScript({
+        file: "pointfinder.js"
+    })
+    .then(showSuccess)
+    .catch(reportExecuteScriptError);
