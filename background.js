@@ -3,6 +3,7 @@
  * Listens for messages from content scripts and updates the browser_action.
  */
 const baseUri = 'http://localhost:3000/';
+//const baseUri = ''
 
 browser.runtime.onMessage.addListener((message, sender) => {
     if (message.type = "has_deals") {
@@ -10,14 +11,15 @@ browser.runtime.onMessage.addListener((message, sender) => {
         let url = sender.tab.url;
         console.log(`MESSAGE RECEIVED\n` +
             `Type: ${message.type}\nFrom Id: ${senderId}\nURL: ${url}`);
-        //TODO replace with evaluation of the url for a merchant id or send host to the backend
-        let merchantId = 0;
-        if (url === 'https://www.adidas.com/us') {
-            merchantId = 1;
+        const regEx = new RegExp('[0-9a-zA-Z\-]*(?=(\.com\/|\.org\/))');
+        let domain = regEx.exec(url);
+        if (domain) {
+            domain = domain[0];
+        } else {
+            domain = null;
         }
         // Make the request to backend to get deals for that merchantId
-        updateTab(senderId, merchantId);
-
+        updateTab(senderId, domain);
     }
 })
 
@@ -69,8 +71,12 @@ const resetAlert = (tabId) => {
 }
 
 // used as a callback to call appropriate browserAction update.
-const updateTab = (tabId, merchantId) => {
-    getRequest(`${baseUri}deals/${merchantId}`, (status) => {
+const updateTab = (tabId, domain) => {
+    if (!domain) {
+        resetAlert(tabId);
+        return;
+    }
+    getRequest(`${baseUri}deal/${domain}`, (status) => {
         status == 200 ? alertDeal(tabId) : resetAlert(tabId);
     });
 }
