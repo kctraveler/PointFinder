@@ -2,8 +2,8 @@
  * Background script runs continuously from time add-on is loaded
  * Listens for messages from content scripts and updates the browser_action.
  */
-const baseUri = 'http://localhost:3000/';
-//const baseUri = ''
+//const baseUri = 'http://localhost:3000/';
+const baseUri = 'https://point-finder.herokuapp.com/'
 
 browser.runtime.onMessage.addListener((message, sender) => {
     if (message.type = "has_deals") {
