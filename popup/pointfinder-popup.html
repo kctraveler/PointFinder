@@ -4,11 +4,20 @@
         <link rel="stylesheet" href="pointfinder-popup.css">
     </head>
     <body>
-        <div id="popup-content">
-            <h1>Hello World!</h1>
-            <p>Current Page : <span id="current_page"></span></p>
+         <h1>Point Finder</h1>
+        
+        <div id="popup_content">
+            <h2 id="no_promos">No promotions available</h2>
+            <h2 class="hidden">Available Promotions</h2>
+            <ul id="promoitions" class="hidden">
+                <li class="promo">
+                    <span class="airline"></span>
+                    <br>
+                    <a href="" class="rebate_link"></a>
+                </li>
+            </ul>
         </div>
-        <div id="error-content" class="hidden">
+        <div id="error_content" class="hidden">
             <p>Error</p>
         </div>
         <script src="pointfinder-popup.js"></script>

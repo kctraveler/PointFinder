@@ -76,7 +76,7 @@ const updateTab = (tabId, domain) => {
         resetAlert(tabId);
         return;
     }
-    getRequest(`${baseUri}deal/${domain}`, (status) => {
+    getRequest(`${baseUri}merchant/${domain}`, (status) => {
         status == 200 ? alertDeal(tabId) : resetAlert(tabId);
     });
 }
