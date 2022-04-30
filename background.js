@@ -5,34 +5,11 @@
 //const baseUri = 'http://localhost:3000/';
 const baseUri = 'https://point-finder.herokuapp.com/'
 
-browser.runtime.onMessage.addListener((message, sender) => {
-    if (message.type = "has_deals") {
-        let senderId = sender.tab.id;
-        let url = sender.tab.url;
-        console.log(`MESSAGE RECEIVED\n` +
-            `Type: ${message.type}\nFrom Id: ${senderId}\nURL: ${url}`);
-        const regEx = new RegExp('[0-9a-zA-Z\-]*(?=(\.com\/|\.org\/))');
-        let domain = regEx.exec(url);
-        if (domain) {
-            domain = domain[0];
-        } else {
-            domain = null;
-        }
-        // Make the request to backend to get deals for that merchantId
-        updateTab(senderId, domain);
-    }
-})
-
-/******************************************************************************
- * HELPER FUNCTIONS
- */
-// Makes a synchronous get request. Callback handles the response.
-
 const getRequest = (urlPath, callback) => {
     console.log(`Making request to ${urlPath}`);
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
-        callback(this.status);
+        callback(this);
     }
     xhr.open('GET', urlPath, true);
     xhr.send(null);
@@ -70,13 +47,40 @@ const resetAlert = (tabId) => {
     });
 }
 
-// used as a callback to call appropriate browserAction update.
-const updateTab = (tabId, domain) => {
+
+/**
+ * Updates the extension components according to the deal
+ */
+const updateBrowser = (tabId, domain) => {
     if (!domain) {
         resetAlert(tabId);
-        return;
+        return false;
     }
-    getRequest(`${baseUri}merchant/${domain}`, (status) => {
-        status == 200 ? alertDeal(tabId) : resetAlert(tabId);
+    getRequest(`${baseUri}merchant/${domain}`, (res) => {
+        let status = res.status;
+        if (status === 200) {
+            alertDeal(tabId);
+            return JSON.parse(res.responseText)
+        } else {
+            resetAlert(tabId)
+            return false;
+        }
     });
 }
+
+browser.runtime.onMessage.addListener((message, sender) => {
+    if (message.type === 'get_promos') {
+        let senderId = sender.tab.id;
+        let url = sender.tab.url;
+        console.log(`MESSAGE RECEIVED\n` +
+            `Type: ${message.type}\nFrom Id: ${senderId}\nURL: ${url}`);
+        const regEx = new RegExp('[0-9a-zA-Z\-]*(?=(\.com\/|\.org\/))');
+        let domain = regEx.exec(url);
+        if (domain) {
+            domain = domain[0];
+        } else {
+            domain = null;
+        }
+        return updateBrowser(senderId, domain);
+    }
+})
