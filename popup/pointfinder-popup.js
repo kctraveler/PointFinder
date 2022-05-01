@@ -39,11 +39,20 @@ const getPromos = async () => {
     }
 }
 
-const airlineNames = {
-    'AAL': 'American Airlines',
-    'DAL': 'Delta Air Lines',
-    'LUV': 'Southwest Airlines',
-    'UAL': 'United Airlines'
+// Stores data about each airline for display
+const airlineDetails = {
+    'AAL': {
+        displayName: 'American Airlines'
+    },
+    'DAL': {
+        displayName: 'Delta Air Lines'
+    },
+    'LUV': {
+        displayName: 'Southwest Airlines'
+    },
+    'UAL': {
+        displayName: 'United Airlines'
+    }
 };
 
 /**
@@ -63,24 +72,29 @@ let build = async (promosResponse) => {
     // Add promotions to the list
     let listNode = $('promotions');
     let listItem = document.querySelector('.promo');
+    // create a template from the original html file
     let listTemplate = listItem.cloneNode(true);
-    listNode.removeChild(listItem);
+    // keep a blank copy of the template for each deal
+    let placeholder = listTemplate.cloneNode(true);
+    listNode.removeChild(listItem); // remove the template node
     for (let i = 0; i < promos.length; i++) {
         let deal = promos[i];
-        let airlineName = airlineNames[deal.airline];
-        console.log(listTemplate);
+        // update displayed Airline Name
+        let airlineName = airlineDetails[deal.airline].displayName;
         let span = listTemplate.firstElementChild;
         span.innerText = airlineName;
+        // update deal link and details
         let a = span.nextElementSibling;
         a.href = deal.href;
         a.innerHTML = deal.value;
+        // add new deal to the list
         listNode.append(listTemplate);
-        listTemplate = listTemplate.cloneNode(true);
+        // reset the template to blank
+        listTemplate = placeholder.cloneNode(true);
     }
-    console.log(listNode.childNodes);
+    // display the list
     listNode.classList.remove("hidden");
 }
-
 
 let promos = getPromos();
 build(promos);
