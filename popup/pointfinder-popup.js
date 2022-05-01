@@ -67,7 +67,6 @@ let build = async (promosResponse) => {
     // Update placeholder headers if promos available. 
     if (promos.length > 0) {
         $('no_promos').classList.add("hidden");
-        $('available').classList.remove("hidden");
     }
     // Add promotions to the list
     let listNode = $('promotions');

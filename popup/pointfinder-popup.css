@@ -1,3 +1,47 @@
 .hidden {
     display: none;
 }
+
+body {
+    background-color: skyblue;
+    color: white;
+}
+
+ul#promotions {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-bottom: 10;
+    color: white;
+    padding: 0;
+}
+
+h2 {
+    margin: 5;
+    margin-left: 0;
+}
+
+li.promo {
+    padding-top: 10;
+    padding-bottom: 5;
+    margin: 0;
+}
+
+li.promo:first {
+    padding-top: 0;
+}
+
+li>span.airline {
+    display: block;
+    font-size: 1.5em;
+
+}
+
+.rebate_link {
+    font-size: 1.25em;
+    text-decoration-color: black;
+    color: black;
+}
