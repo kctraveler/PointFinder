@@ -16,18 +16,9 @@ let requestPromoDetails = async () => {
 
 let promoDetails = requestPromoDetails();
 
-let run = async (promise) => {
-    console.log(await promise);
-}
 
-run(promoDetails);
-
-// browser.runtime.onMessage.addListener(message => {
-//     if (!message.type == 'promo_request') return false;
-//     console.log("BrowserAction Clicked. Sending promo details");
-//     promos = await promoDetails;
-//     console.log(promos);
-//     return Promise.resolve({
-//         response: promos
-//     });
-// })
+browser.runtime.onMessage.addListener(message => {
+    if (!message.type == 'promo_request') return false;
+    console.log(`PointFinder Browser Action Clicked\nSending promo details`);
+    return promoDetails;
+})

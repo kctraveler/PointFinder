@@ -20,9 +20,9 @@ const getPromos = async () => {
     };
     try {
         let promos = await browser.tabs.sendMessage(tabId, message);
-        console.log(promos);
+        console.log(`POPUP:\n ${JSON.stringify(promos)}`);
     } catch (e) {
-        console.error(e);
+        console.error(`POPUP:\n${e}`);
     }
 }
 
