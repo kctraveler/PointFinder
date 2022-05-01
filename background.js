@@ -81,10 +81,8 @@ const resetAlert = (tabId) => {
  */
 const updateBrowser = async (tabId, response) => {
     let res = await response;
-    console.log(res);
     if (res.status === 200) {
         alertDeal(tabId);
-        console.log(200)
     } else {
         resetAlert(tabId)
     }
