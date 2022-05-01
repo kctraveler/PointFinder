@@ -3,25 +3,26 @@
 }
 
 body {
-    background-color: skyblue;
-    color: white;
+    /* background-color: skyblue; */
+    color: black;
+    margin: 0;
 }
 
 ul#promotions {
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 0 10 10 10;
 }
 
 h1 {
-    margin-bottom: 10;
+    margin-bottom: 0;
+    background-color: skyblue;
     color: white;
-    padding: 0;
+    padding: 10 10 10 20;
 }
 
 h2 {
-    margin: 5;
-    margin-left: 0;
+    margin: 10;
 }
 
 li.promo {
